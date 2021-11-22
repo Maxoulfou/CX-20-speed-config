@@ -1,0 +1,44 @@
+{
+  "barco": {
+    "network-info": {
+      "ip": "192.168.1.2",
+      "broadcast": "255.255.255.0",
+      "gateway": "192.168.1.1"
+    },
+    "personalisation": {
+      "on-screen-id": {
+        "language": "fr",
+        "meeting-room-name": "test-meeting-room",
+        "location": "France",
+        "welcome-message": "Welcome !",
+        "show-network-info": true,
+        "enable-threater-mode": true
+      },
+      "wallpaper": {
+        "number": 1
+      }
+    },
+    "wifi-networks": {
+      "lan-settings": {
+        "lan-host-name": {
+          "hostname": "hostname-test"
+        },
+        "primary-interface": {
+          "method": "automatic",
+          "primary-interface-ip": "0.0.0.0",
+          "primary-interface-subnet-mask": "0.0.0.0",
+          "primary-interface-gateway": "0.0.0.0",
+          "primary-interface-dns-server": "0.0.0.0"
+        }
+      },
+      "services": {
+        "share-via-air-play": true,
+        "share-via-google-cast": true
+      },
+      "wireless-network": {
+        "ssid-name": "ssid-barco-test",
+        "wpa-2-password": "test-barco"
+      }
+    }
+  }
+}
