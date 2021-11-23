@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"runtime"
+	"strconv"
 )
 
 // TODO : make IP struct
@@ -61,6 +63,8 @@ func LoadConfiguration(file string) Barco {
 	}
 	jsonParser := json.NewDecoder(configFile)
 	jsonParser.Decode(&config)
-	logs.WriteLogs("info", "Config file is successfully loaded !")
+	_, file, line, _ := runtime.Caller(1)
+	logs.WriteLogs("info", "("+file+" : "+strconv.Itoa(line)+") Config file is successfully loaded !")
+
 	return config
 }
