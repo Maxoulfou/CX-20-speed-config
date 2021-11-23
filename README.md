@@ -6,5 +6,4 @@
   <br>
 </h1>
 
-
-Golang tool to configure the Barco CX-20 in one click. Maybe in the continuation of this tool, a second tool to create the configuration file to import will be published on my git.
+<h4 align="center">A tool to configure fastly Barco CX-20 station. It's free and open-source.</h4>
