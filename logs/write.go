@@ -15,8 +15,6 @@ import (
 // date format: dd/mm/yyyy
 // [INFO/WARN/ERR/DBUG] 02/01/2006 15:04:05 Content for log
 func WriteLogs(level string, content string) {
-	// TODO : make correct defer func | handle errors !
-
 	switch level {
 	case "error":
 		ErrorFile := NewLogFile("ERROR")
@@ -58,6 +56,20 @@ func WriteLogs(level string, content string) {
 		}(DebugFile)
 		golog.SetLevelOutput("debug", DebugFile)
 		break
+	case "fatal":
+		FatalFile := NewLogFile("FATAL")
+		defer func(FatalFile *os.File) {
+			DeferNewLogFileErr := FatalFile.Close()
+			if DeferNewLogFileErr != nil {
+				log.Fatalf("New log file : " + DeferNewLogFileErr.Error())
+			}
+		}(FatalFile)
+		golog.SetLevelOutput("fatal", FatalFile)
+		break
+	default:
+		golog.Fatal("Any level of log are passed in arguments !")
+		os.Exit(1)
+		break
 	}
 
 	// golog.SetOutput(io.MultiWriter(f, os.Stdout))
@@ -68,6 +80,7 @@ func WriteLogs(level string, content string) {
 	golog.WarnText("[WARN]", 32)
 	golog.InfoText("[INFO]", 34)
 	golog.DebugText("[DEBUG]", 33)
+	// Can't modify fatal log level displaying text
 
 	fmt.Println("level: " + level)
 	switch level {

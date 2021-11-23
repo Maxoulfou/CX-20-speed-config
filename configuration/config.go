@@ -54,17 +54,31 @@ type Barco struct {
 	}
 }
 
-func LoadConfiguration(file string) Barco {
-	var config Barco
+func LoadConfiguration(file string) (Barco Barco, Error error) {
+	config := Barco
+	_, file, line, _ := runtime.Caller(1)
+
 	configFile, err := os.Open(file)
-	defer configFile.Close()
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+
+	defer func(configFile *os.File) {
+		DeferConfigFileError := configFile.Close()
+		if DeferConfigFileError != nil {
+			logs.WriteLogs("error", "("+file+" : "+strconv.Itoa(line)+") Defering config file failed : "+DeferConfigFileError.Error())
+		}
+	}(configFile)
+
 	jsonParser := json.NewDecoder(configFile)
-	jsonParser.Decode(&config)
-	_, file, line, _ := runtime.Caller(1)
+
+	JsonParserDecodeError := jsonParser.Decode(&config)
+	if JsonParserDecodeError != nil {
+		logs.WriteLogs("error", "("+file+" : "+strconv.Itoa(line)+") Decode JSON parser failed : "+JsonParserDecodeError.Error())
+		return Barco, JsonParserDecodeError
+	}
+
 	logs.WriteLogs("info", "("+file+" : "+strconv.Itoa(line)+") Config file is successfully loaded !")
 
-	return config
+	return config, nil
 }
