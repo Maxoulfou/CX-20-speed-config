@@ -1,6 +1,7 @@
 package configuration
 
 import (
+	"cx-20-api/logs"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -10,18 +11,44 @@ import (
 
 type Barco struct {
 	Network struct {
-		IP        string
-		Broadcast string
-		Gateway   string
+		IP         string
+		SubnetMask string
+		Gateway    string
 	}
-	Info struct {
-		Name           string
-		WelcomeMessage string
-		PieceName      string
+	Personalisation struct {
+		OnScreenID struct {
+			Language           string
+			MeetingRoomName    string
+			Location           string
+			WelcomeMessage     string
+			ShowNetworkInfo    bool
+			EnableThreaterMode bool
+		}
+		Wallpaper struct {
+			Number int
+		}
 	}
-	WirelessNetwork struct {
-		SSIDName     string
-		WPA2Password string
+	WifiNetwork struct {
+		LanSettings struct {
+			LanHostName struct {
+				Hostname string
+			}
+			PrimaryInterface struct {
+				Method                     string
+				PrimaryInterfaceIP         string
+				PrimaryInterfaceSubnetMask string
+				PrimaryInterfaceGateway    string
+				PrimaryInterfaceDnsServer  string
+			}
+		}
+		Services struct {
+			ShareViaAirPlay    bool
+			ShareViaGoogleCast bool
+		}
+		WirelessNetwork struct {
+			SsidName     string
+			Wpa2Password string
+		}
 	}
 }
 
@@ -34,5 +61,6 @@ func LoadConfiguration(file string) Barco {
 	}
 	jsonParser := json.NewDecoder(configFile)
 	jsonParser.Decode(&config)
+	logs.WriteLogs("info", "Config file is successfully loaded !")
 	return config
 }
