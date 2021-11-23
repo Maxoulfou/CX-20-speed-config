@@ -3,7 +3,7 @@ package logs
 import (
 	"fmt"
 	"github.com/kataras/golog"
-	"io"
+	"log"
 	"os"
 	"time"
 )
@@ -16,14 +16,51 @@ import (
 // [INFO/WARN/ERR/DBUG] 02/01/2006 15:04:05 Content for log
 func WriteLogs(level string, content string) {
 	// TODO : make correct defer func | handle errors !
-	/*golog.SetLevelOutput("debug", debugFile)
-	golog.SetLevelOutput("info", infoFile)*/
 
-	//logger := InitLogs()
-	f := NewLogFile()
-	defer f.Close()
+	switch level {
+	case "error":
+		ErrorFile := NewLogFile("ERROR")
+		defer func(ErrorFile *os.File) {
+			DeferNewLogFileErr := ErrorFile.Close()
+			if DeferNewLogFileErr != nil {
+				log.Fatalf("New log file : " + DeferNewLogFileErr.Error())
+			}
+		}(ErrorFile)
+		golog.SetLevelOutput("error", ErrorFile)
+		break
+	case "warn":
+		WarnFile := NewLogFile("WARN")
+		defer func(WarnFile *os.File) {
+			DeferNewLogFileErr := WarnFile.Close()
+			if DeferNewLogFileErr != nil {
+				log.Fatalf("New log file : " + DeferNewLogFileErr.Error())
+			}
+		}(WarnFile)
+		golog.SetLevelOutput("warn", WarnFile)
+		break
+	case "info":
+		InfoFile := NewLogFile("INFO")
+		defer func(InfoFile *os.File) {
+			DeferNewLogFileErr := InfoFile.Close()
+			if DeferNewLogFileErr != nil {
+				log.Fatalf("New log file : " + DeferNewLogFileErr.Error())
+			}
+		}(InfoFile)
+		golog.SetLevelOutput("info", InfoFile)
+		break
+	case "debug":
+		DebugFile := NewLogFile("DEBUG")
+		defer func(DebugFile *os.File) {
+			DeferNewLogFileErr := DebugFile.Close()
+			if DeferNewLogFileErr != nil {
+				log.Fatalf("New log file : " + DeferNewLogFileErr.Error())
+			}
+		}(DebugFile)
+		golog.SetLevelOutput("debug", DebugFile)
+		break
+	}
 
-	golog.SetOutput(io.MultiWriter(f, os.Stdout))
+	// golog.SetOutput(io.MultiWriter(f, os.Stdout))
 
 	golog.SetTimeFormat(time.ANSIC)
 
