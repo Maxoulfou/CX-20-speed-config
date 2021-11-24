@@ -1,6 +1,7 @@
 package logs
 
 import (
+	"cx-20-api/configuration"
 	"github.com/kataras/golog"
 	"log"
 	"os"
@@ -15,11 +16,18 @@ import (
 // [INFO/WARN/ERR/DBUG] 02/01/2006 15:04:05 Content for log
 func WriteLogs(level string, content string) {
 	// load yml conf
-	// envConfig := configuration.GetEnv()
+	envConfig := configuration.GetEnv()
 
 	switch level {
 	case "error":
-		ErrorFile := NewLogFile("ERROR")
+		//ErrorFile := NewLogFile("ERROR")
+		ErrorFile := &os.File{}
+		if envConfig.Log == "separated" {
+			ErrorFile = NewLogFile("ERROR")
+		} else if envConfig.Log == "all-in-one" {
+			ErrorFile = NewLogFile("log")
+		}
+
 		defer func(ErrorFile *os.File) {
 			DeferNewLogFileErr := ErrorFile.Close()
 			if DeferNewLogFileErr != nil {
@@ -29,7 +37,14 @@ func WriteLogs(level string, content string) {
 		golog.SetLevelOutput("error", ErrorFile)
 		break
 	case "warn":
-		WarnFile := NewLogFile("WARN")
+		//WarnFile := NewLogFile("WARN")
+		WarnFile := &os.File{}
+		if envConfig.Log == "separated" {
+			WarnFile = NewLogFile("WARN")
+		} else if envConfig.Log == "all-in-one" {
+			WarnFile = NewLogFile("log")
+		}
+
 		defer func(WarnFile *os.File) {
 			DeferNewLogFileErr := WarnFile.Close()
 			if DeferNewLogFileErr != nil {
@@ -39,7 +54,14 @@ func WriteLogs(level string, content string) {
 		golog.SetLevelOutput("warn", WarnFile)
 		break
 	case "info":
-		InfoFile := NewLogFile("INFO")
+		//InfoFile := NewLogFile("INFO")
+		InfoFile := &os.File{}
+		if envConfig.Log == "separated" {
+			InfoFile = NewLogFile("INFO")
+		} else if envConfig.Log == "all-in-one" {
+			InfoFile = NewLogFile("log")
+		}
+
 		defer func(InfoFile *os.File) {
 			DeferNewLogFileErr := InfoFile.Close()
 			if DeferNewLogFileErr != nil {
@@ -49,7 +71,14 @@ func WriteLogs(level string, content string) {
 		golog.SetLevelOutput("info", InfoFile)
 		break
 	case "debug":
-		DebugFile := NewLogFile("DEBUG")
+		//DebugFile := NewLogFile("DEBUG")
+		DebugFile := &os.File{}
+		if envConfig.Log == "separated" {
+			DebugFile = NewLogFile("DEBUG")
+		} else if envConfig.Log == "all-in-one" {
+			DebugFile = NewLogFile("log")
+		}
+
 		defer func(DebugFile *os.File) {
 			DeferNewLogFileErr := DebugFile.Close()
 			if DeferNewLogFileErr != nil {
@@ -59,7 +88,14 @@ func WriteLogs(level string, content string) {
 		golog.SetLevelOutput("debug", DebugFile)
 		break
 	case "fatal":
-		FatalFile := NewLogFile("FATAL")
+		//FatalFile := NewLogFile("FATAL")
+		FatalFile := &os.File{}
+		if envConfig.Log == "separated" {
+			FatalFile = NewLogFile("FATAL")
+		} else if envConfig.Log == "all-in-one" {
+			FatalFile = NewLogFile("log")
+		}
+
 		defer func(FatalFile *os.File) {
 			DeferNewLogFileErr := FatalFile.Close()
 			if DeferNewLogFileErr != nil {
