@@ -1,7 +1,6 @@
 package logs
 
 import (
-	"fmt"
 	"github.com/kataras/golog"
 	"log"
 	"os"
@@ -82,7 +81,7 @@ func WriteLogs(level string, content string) {
 	golog.DebugText("[DEBUG]", 33)
 	// Can't modify fatal log level displaying text
 
-	fmt.Println("level: " + level)
+	// DEBUG : fmt.Println("level: " + level)
 	switch level {
 	case "info":
 		golog.SetLevel("info")
