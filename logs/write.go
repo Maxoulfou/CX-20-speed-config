@@ -14,6 +14,9 @@ import (
 // date format: dd/mm/yyyy
 // [INFO/WARN/ERR/DBUG] 02/01/2006 15:04:05 Content for log
 func WriteLogs(level string, content string) {
+	// load yml conf
+	// envConfig := configuration.GetEnv()
+
 	switch level {
 	case "error":
 		ErrorFile := NewLogFile("ERROR")

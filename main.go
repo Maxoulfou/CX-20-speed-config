@@ -10,20 +10,25 @@ import (
 )
 
 func main() {
-	logs.WriteLogs("info", "App is started")
-	// TODO : make env setup via yaml file
-	_, file, line, _ := runtime.Caller(1)
+	envConfig := configuration.GetEnv()
 
-	// TODO : if in yaml file, env is set up to debug, not prod
-	logs.WriteLogs("error", "("+file+" : "+strconv.Itoa(line)+") TEST ERROR LOG")
-	logs.WriteLogs("warn", "("+file+" : "+strconv.Itoa(line)+") TEST WARN LOG")
-	logs.WriteLogs("info", "("+file+" : "+strconv.Itoa(line)+") TEST INFO LOG")
-	logs.WriteLogs("debug", "("+file+" : "+strconv.Itoa(line)+") TEST DEBUG LOG")
-	// Must be commented, this snippet broke code
-	// logs.WriteLogs("fatal", "("+file+" : "+strconv.Itoa(line)+") TEST FATAL LOG")
+	logs.WriteLogs("info", "App is started")
+
+	if envConfig.Env == "debug" {
+		_, file, line, _ := runtime.Caller(1)
+		// TODO : if in yaml file, env is set up to debug, not prod
+		logs.WriteLogs("error", "("+file+" : "+strconv.Itoa(line)+") TEST ERROR LOG")
+		logs.WriteLogs("warn", "("+file+" : "+strconv.Itoa(line)+") TEST WARN LOG")
+		logs.WriteLogs("info", "("+file+" : "+strconv.Itoa(line)+") TEST INFO LOG")
+		logs.WriteLogs("debug", "("+file+" : "+strconv.Itoa(line)+") TEST DEBUG LOG")
+		// Must be commented, this snippet broke code
+		// logs.WriteLogs("fatal", "("+file+" : "+strconv.Itoa(line)+") TEST FATAL LOG")
+	}
 
 	BarcoConfig, _ := configuration.LoadConfiguration("config.json")
 	config, _ := format.PrettyStruct(BarcoConfig)
+
+	_, file, line, _ := runtime.Caller(1)
 	logs.WriteLogs("info", "("+file+" : "+strconv.Itoa(line)+") Loaded configuration:\n"+config)
 	logs.WriteLogs("info", "--- End loaded configuration ---")
 	// Must be commented, this snippet broke code
