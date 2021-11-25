@@ -4,8 +4,10 @@ package entity
 // env : (debug,test,pre-prod,prod,alpha,beta)
 // log : (all-in-one, separated)
 type Config struct {
-	Env string `yaml:"env"`
-	Log string `yaml:"log"`
+	Env    string `yaml:"env"`
+	Log    string `yaml:"log"`
+	ApiUrl string `yaml:"api-url"`
+	ApiKey string `yaml:"api-key"`
 }
 
 // Barco is struct for json config. It will be used for configure your
