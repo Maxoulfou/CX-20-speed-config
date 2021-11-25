@@ -132,3 +132,13 @@ type Barco struct {
 ## Auth
 
 > Not coded at this time
+
+## LineCounter benchmark
+
+```
+/*
+	BenchmarkBuffioScan   500      6408963 ns/op     4208 B/op    2 allocs/op
+	BenchmarkBytesCount   500      4323397 ns/op     8200 B/op    1 allocs/op
+	BenchmarkBytes32k     500      3650818 ns/op     65545 B/op   1 allocs/op
+*/
+```
