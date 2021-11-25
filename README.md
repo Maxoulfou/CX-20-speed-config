@@ -2,7 +2,7 @@
   <br>
   <a href="https://www.barco.com/en/"><img src="https://www.cap-visio.com/wp-content/uploads/2020/11/Barco-Logo-900x244.png" alt="Logo Barco" width="200"></a>
   <br>
-  CX-20-api
+  CX-20-speed-config
   <br>
 </h1>
 
