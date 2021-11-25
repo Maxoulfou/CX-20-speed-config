@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
+	"regexp"
 )
 
 // PrettyStruct : JSON pretty print by marshaling value
@@ -32,4 +33,11 @@ func PrettyString(str string) (string, error) {
 		return "", err
 	}
 	return prettyJSON.String(), nil
+}
+
+// TrimSpaceDashInString : Trim all dash in string
+func TrimSpaceDashInString(s string) string {
+	re := regexp.MustCompile(`\s+`)
+
+	return re.ReplaceAllString(s, "-")
 }
