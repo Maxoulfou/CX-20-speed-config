@@ -42,8 +42,8 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 
 func CheckIfBarcoCxApiIsReachable() {
 	cfg := configuration.GetEnv()
-	dolibarrURL := cfg.ApiUrl
-	URL := dolibarrURL + "/explorer/"
+	BarcoApiUrl := cfg.ApiUrl
+	URL := BarcoApiUrl + "/explorer/"
 	timeout := 500 * time.Second
 
 	client := http.Client{
