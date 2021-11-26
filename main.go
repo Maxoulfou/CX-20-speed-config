@@ -1,9 +1,11 @@
 package main
 
 import (
+	"cx-20-api/api"
 	"cx-20-api/configuration"
 	"cx-20-api/format"
 	"cx-20-api/logs"
+	"fmt"
 	"os"
 	"runtime"
 	"strconv"
@@ -34,6 +36,16 @@ func main() {
 	// Must be commented, this snippet broke code
 	// test fatal log when I cant set loglevel :
 	// logs.WriteLogs("", "fatal test")
+
+	if api.CheckIfBarcoCxApiIsReachable() {
+		fmt.Println("it is ok")
+	} else {
+		fmt.Println("it is not ok")
+	}
+
+	cfg := configuration.GetEnv()
+	prettyCfg, _ := format.PrettyStruct(cfg)
+	fmt.Printf("yml config: %+v\n", prettyCfg)
 
 	os.Exit(0)
 }
