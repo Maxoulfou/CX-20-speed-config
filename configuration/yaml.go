@@ -8,7 +8,7 @@ import (
 )
 
 func GetEnv() entity.Config {
-	filename, _ := filepath.Abs("env.yml")
+	filename, _ := filepath.Abs("env-prod.yml")
 	yamlFile, err := ioutil.ReadFile(filename)
 	var config entity.Config
 
