@@ -8,13 +8,66 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strings"
 )
 
 // MakeRequest is the generic function to execute CX20API requests
 func MakeRequest(path string, params string, method string) (response *http.Response, error error) {
-	CheckIfBarcoCxApiIsReachable()
 	cfg := configuration.GetEnv()
+
+	// TODO : make insecure request trough http transport method only for knowing end-devices
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+
+	logs.WriteLogs("info", "CheckIfBarcoCxApiIsReachable start")
+	url := cfg.ApiUrl + path
+
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url, nil)
+
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	Auth := "Basic " + cfg.ApiToken
+
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", Auth)
+
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	status := res.Status
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	FinalBody := string(body)
+	FinalBody, _ = format.PrettyString(FinalBody)
+
+	logs.WriteLogs("info", "api-CheckIfBarcoCxApiIsReachable : \n"+FinalBody)
+
+	switch status {
+	case "200 OK":
+		return response, nil
+		break
+	default:
+		return nil, err
+		break
+	}
+	return nil, err
+
+	/*CheckIfBarcoCxApiIsReachable()
+	cfg := configuration.GetEnv()
+
+	// TODO : make insecure request trough http transport method only for knowing end-devices
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
 	Cx20ApiUrl := cfg.ApiUrl + path
 
@@ -41,7 +94,7 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 		return response, responseError
 	}
 
-	return response, error
+	return response, error */
 }
 
 // CheckIfBarcoCxApiIsReachable check if barco api is reachable with getting device identity.

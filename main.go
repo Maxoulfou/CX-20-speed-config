@@ -47,5 +47,8 @@ func main() {
 	prettyCfg, _ := format.PrettyStruct(cfg)
 	fmt.Printf("yml config: %+v\n", prettyCfg)
 
+	fmt.Println("Test reboot")
+	api.Reboot()
+
 	os.Exit(0)
 }
