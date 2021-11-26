@@ -17,3 +17,6 @@
 
 # Excluse all logs files
 logs/*.log
+
+# exclude prod env yml
+env-prod.yml
