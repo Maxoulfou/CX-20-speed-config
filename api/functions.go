@@ -17,9 +17,10 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 	// TODO : make insecure request trough http transport method only for knowing end-devices
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
-	logs.WriteLogs("info", "CheckIfBarcoCxApiIsReachable start")
+	logs.WriteLogs("info", "MakeRequest start")
 	url := cfg.ApiUrl + path
 
+	// TODO : Add body to request
 	client := &http.Client{}
 	req, err := http.NewRequest(method, url, nil)
 
@@ -51,7 +52,7 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 	FinalBody := string(body)
 	FinalBody, _ = format.PrettyString(FinalBody)
 
-	logs.WriteLogs("info", "api-CheckIfBarcoCxApiIsReachable : \n"+FinalBody)
+	logs.WriteLogs("info", "api-MakeRequest : \n"+FinalBody)
 
 	switch status {
 	case "200 OK":
@@ -61,7 +62,6 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 		return nil, err
 		break
 	}
-	return nil, err
 
 	/*CheckIfBarcoCxApiIsReachable()
 	cfg := configuration.GetEnv()
@@ -93,8 +93,8 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 	if response.StatusCode != http.StatusOK {
 		return response, responseError
 	}
-
-	return response, error */
+	*/
+	return response, error
 }
 
 // CheckIfBarcoCxApiIsReachable check if barco api is reachable with getting device identity.
