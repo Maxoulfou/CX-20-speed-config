@@ -20,7 +20,7 @@ func NewLogFile(loglevel string) *os.File {
 	f, err := os.OpenFile("logs/"+loglevel+"-"+filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		golog.Fatal(err)
-		WriteLogs("error", err.Error())
+		WriteLogs("error", err.Error(), true)
 		panic(err)
 	}
 
