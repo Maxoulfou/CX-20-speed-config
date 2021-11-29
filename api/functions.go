@@ -2,7 +2,7 @@ package api
 
 import (
 	"crypto/tls"
-	"cx-20-api/configuration"
+	"cx-20-api/entity"
 	"cx-20-api/format"
 	"cx-20-api/logs"
 	"fmt"
@@ -12,7 +12,9 @@ import (
 
 // MakeRequest is the generic function to execute CX20API requests
 func MakeRequest(path string, params string, method string) (response *http.Response, error error) {
-	cfg := configuration.GetEnv()
+	// cfg := configuration.GetEnv()
+	var cfg entity.YmlConfig
+	cfg.GetConfig()
 
 	// TODO : make insecure request trough http transport method only for knowing end-devices
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
@@ -62,44 +64,13 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 		break
 	}
 	return nil, err
-
-	/*CheckIfBarcoCxApiIsReachable()
-	cfg := configuration.GetEnv()
-
-	// TODO : make insecure request trough http transport method only for knowing end-devices
-	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
-
-	Cx20ApiUrl := cfg.ApiUrl + path
-
-	payload := strings.NewReader(params)
-
-	client := &http.Client{}
-	req, reqError := http.NewRequest(method, Cx20ApiUrl, payload)
-
-	if reqError != nil {
-		return nil, reqError
-	}
-
-	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("APIKEY", cfg.ApiToken) // add CX-20 api key
-
-	response, responseError := client.Do(req)
-	if responseError != nil {
-		return nil, responseError
-	}
-
-	// defer response.Body.Close()
-
-	if response.StatusCode != http.StatusOK {
-		return response, responseError
-	}
-
-	return response, error */
 }
 
 // CheckIfBarcoCxApiIsReachable check if barco api is reachable with getting device identity.
 func CheckIfBarcoCxApiIsReachable() bool {
-	cfg := configuration.GetEnv()
+	// cfg := configuration.GetEnv()
+	var cfg entity.YmlConfig
+	cfg.GetConfig()
 
 	// TODO : make insecure request trough http transport method only for knowing end-devices
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
