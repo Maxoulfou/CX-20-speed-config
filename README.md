@@ -73,9 +73,13 @@ log: "log-method"
 > The structure below may not change, or there may be only additional possibilities
 
 ```go
-type Config struct {
-	Env string `yaml:"env"`
-	Log string `yaml:"log"`
+type YmlConfig struct {
+	Env          string  `yaml:"env"`
+	Log          string  `yaml:"log"`
+	ApiUrl       string  `yaml:"api-url"`
+	ApiUser      string  `yaml:"api-user"`
+	ApiPassword  string  `yaml:"api-password"`
+	ApiToken     string  `yaml:"api-token"`
 }
 ```
 
@@ -132,7 +136,12 @@ type Barco struct {
 
 ## Auth
 
-> Not coded at this time
+For authentication, it will be enough to enter either the user and the password, or to encode the user and the password in base64 with the following formatting: "user:password"
+
+I strongly recommend using the following code: `req.Header.Add("Authorization", Auth)` with Auth as the environment variable that contains the token. Refer to the line above
+
+
+
 
 ## LineCounter benchmark
 
