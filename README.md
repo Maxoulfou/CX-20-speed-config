@@ -4,6 +4,7 @@
   <br>
   CX-20-speed-config
   <br>
+<a href="#"><img src="https://app.travis-ci.com/Maxoulfou/CX-20-speed-config.svg?branch=main" alt="Build status" width="100"></a>
 </h1>
 
 <h4 align="center">A tool to configure fastly Barco CX-20 station. It's free and open-source.</h4>
