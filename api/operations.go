@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// Reboot function will reboot Barco CX-20 station
 func Reboot() {
 	request, err := MakeRequest(route.Reboot, "", "POST")
 	if err != nil {
