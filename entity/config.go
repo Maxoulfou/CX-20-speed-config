@@ -7,10 +7,12 @@ import (
 	"log"
 )
 
+// ConfigIT interface is used as YAML config getter for environment
 type ConfigIT interface {
 	GetConfig()
 }
 
+// BarcoConfigIT interface is used as JSON config getter for CX-20
 type BarcoConfigIT interface {
 	GetConfig()
 }
