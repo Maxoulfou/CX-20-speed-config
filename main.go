@@ -20,25 +20,25 @@ func main() {
 
 	fmt.Println(YamlEnv)
 
-	logs.WriteLogs("info", "App is started")
+	logs.WriteLogs("info", "App is started\n", true)
 
 	if YamlEnv.Env == "debug" {
 		_, file, line, _ := runtime.Caller(1)
 		// TODO : if in yaml file, env is set up to debug, not prod
-		logs.WriteLogs("error", "("+file+" : "+strconv.Itoa(line)+") TEST ERROR LOG")
-		logs.WriteLogs("warn", "("+file+" : "+strconv.Itoa(line)+") TEST WARN LOG")
-		logs.WriteLogs("info", "("+file+" : "+strconv.Itoa(line)+") TEST INFO LOG")
-		logs.WriteLogs("debug", "("+file+" : "+strconv.Itoa(line)+") TEST DEBUG LOG")
+		logs.WriteLogs("error", "("+file+" : "+strconv.Itoa(line)+") TEST ERROR LOG", false)
+		logs.WriteLogs("warn", "("+file+" : "+strconv.Itoa(line)+") TEST WARN LOG", false)
+		logs.WriteLogs("info", "("+file+" : "+strconv.Itoa(line)+") TEST INFO LOG", false)
+		logs.WriteLogs("debug", "("+file+" : "+strconv.Itoa(line)+") TEST DEBUG LOG", false)
 		// Must be commented, this snippet broke code
-		// logs.WriteLogs("fatal", "("+file+" : "+strconv.Itoa(line)+") TEST FATAL LOG")
+		// logs.WriteLogs("fatal", "("+file+" : "+strconv.Itoa(line)+") TEST FATAL LOG", 0)
 	}
 
 	// BarcoConfig, _ := configuration.LoadConfiguration("config.json")
 	config, _ := format.PrettyStruct(BarcoConfig)
 
 	_, file, line, _ := runtime.Caller(1)
-	logs.WriteLogs("info", "("+file+" : "+strconv.Itoa(line)+") Loaded configuration:\n"+config)
-	logs.WriteLogs("info", "--- End loaded configuration ---")
+	logs.WriteLogs("info", "("+file+" : "+strconv.Itoa(line)+") Loaded configuration:\n"+config+"\n", true)
+	logs.WriteLogs("info", "--- End loaded configuration ---", false)
 	// Must be commented, this snippet broke code
 	// test fatal log when I cant set loglevel :
 	// logs.WriteLogs("", "fatal test")
@@ -51,7 +51,7 @@ func main() {
 
 	// cfg := configuration.GetEnv()
 	prettyCfg, _ := format.PrettyStruct(YamlEnv)
-	fmt.Printf("yml config: %+v\n", prettyCfg)
+	logs.WriteLogs("info", "yml config: \n"+prettyCfg+"\n", true)
 
 	// fmt.Println("Test reboot")
 	// api.Reboot()

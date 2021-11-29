@@ -2,6 +2,7 @@ package logs
 
 import (
 	"cx-20-api/entity"
+	"fmt"
 	"github.com/kataras/golog"
 	"log"
 	"os"
@@ -14,7 +15,7 @@ import (
 // log line. The format of the logs used is the following:
 // date format: dd/mm/yyyy
 // [INFO/WARN/ERR/DBUG] 02/01/2006 15:04:05 Content for log
-func WriteLogs(level string, content string) {
+func WriteLogs(level string, content string, console bool) {
 	// load yml conf
 	// envConfig := configuration.GetEnv()
 	var YamlEnv entity.YmlConfig
@@ -127,22 +128,37 @@ func WriteLogs(level string, content string) {
 	case "info":
 		golog.SetLevel("info")
 		golog.Infof(content)
+		if console {
+			fmt.Printf(level + " : " + content)
+		}
 		break
 	case "warn":
 		golog.SetLevel("warn")
 		golog.Warnf(content)
+		if console {
+			fmt.Printf(level + " : " + content)
+		}
 		break
 	case "error":
 		golog.SetLevel("error")
 		golog.Errorf(content)
+		if console {
+			fmt.Printf(level + " : " + content)
+		}
 		break
 	case "debug":
 		golog.SetLevel("debug")
 		golog.Debugf(content)
+		if console {
+			fmt.Printf(level + " : " + content)
+		}
 		break
 	case "fatal":
 		golog.SetLevel("fatal")
 		golog.Fatalf(content)
+		if console {
+			fmt.Printf(level + " : " + content)
+		}
 		break
 	}
 }

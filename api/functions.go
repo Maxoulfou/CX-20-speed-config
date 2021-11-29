@@ -19,7 +19,7 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 	// TODO : make insecure request trough http transport method only for knowing end-devices
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
-	logs.WriteLogs("info", "MakeRequest start")
+	logs.WriteLogs("info", "MakeRequest start", false)
 	url := cfg.ApiUrl + path
 
 	client := &http.Client{}
@@ -53,7 +53,7 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 	FinalBody := string(body)
 	FinalBody, _ = format.PrettyString(FinalBody)
 
-	logs.WriteLogs("info", "api-MakeRequest : \n"+FinalBody)
+	logs.WriteLogs("info", "api-MakeRequest : \n"+FinalBody+"\n", true)
 
 	switch status {
 	case "200 OK":
@@ -75,7 +75,7 @@ func CheckIfBarcoCxApiIsReachable() bool {
 	// TODO : make insecure request trough http transport method only for knowing end-devices
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
-	logs.WriteLogs("info", "CheckIfBarcoCxApiIsReachable start")
+	logs.WriteLogs("info", "CheckIfBarcoCxApiIsReachable start", false)
 	url := cfg.ApiUrl + "/configuration/system/device-identity"
 	method := "GET"
 
@@ -110,7 +110,7 @@ func CheckIfBarcoCxApiIsReachable() bool {
 	FinalBody := string(body)
 	FinalBody, _ = format.PrettyString(FinalBody)
 
-	logs.WriteLogs("info", "api-CheckIfBarcoCxApiIsReachable : \n"+FinalBody)
+	logs.WriteLogs("info", "api-CheckIfBarcoCxApiIsReachable : "+res.Status, false)
 
 	switch status {
 	case "200 OK":
