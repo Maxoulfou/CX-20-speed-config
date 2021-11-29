@@ -1,7 +1,7 @@
 package logs
 
 import (
-	"cx-20-api/configuration"
+	"cx-20-api/entity"
 	"github.com/kataras/golog"
 	"log"
 	"os"
@@ -16,15 +16,17 @@ import (
 // [INFO/WARN/ERR/DBUG] 02/01/2006 15:04:05 Content for log
 func WriteLogs(level string, content string) {
 	// load yml conf
-	envConfig := configuration.GetEnv()
+	// envConfig := configuration.GetEnv()
+	var YamlEnv entity.YmlConfig
+	YamlEnv.GetConfig()
 
 	switch level {
 	case "error":
 		//ErrorFile := NewLogFile("ERROR")
 		ErrorFile := &os.File{}
-		if envConfig.Log == "separated" {
+		if YamlEnv.Log == "separated" {
 			ErrorFile = NewLogFile("ERROR")
-		} else if envConfig.Log == "all-in-one" {
+		} else if YamlEnv.Log == "all-in-one" {
 			ErrorFile = NewLogFile("log")
 		}
 
@@ -39,9 +41,9 @@ func WriteLogs(level string, content string) {
 	case "warn":
 		//WarnFile := NewLogFile("WARN")
 		WarnFile := &os.File{}
-		if envConfig.Log == "separated" {
+		if YamlEnv.Log == "separated" {
 			WarnFile = NewLogFile("WARN")
-		} else if envConfig.Log == "all-in-one" {
+		} else if YamlEnv.Log == "all-in-one" {
 			WarnFile = NewLogFile("log")
 		}
 
@@ -56,9 +58,9 @@ func WriteLogs(level string, content string) {
 	case "info":
 		//InfoFile := NewLogFile("INFO")
 		InfoFile := &os.File{}
-		if envConfig.Log == "separated" {
+		if YamlEnv.Log == "separated" {
 			InfoFile = NewLogFile("INFO")
-		} else if envConfig.Log == "all-in-one" {
+		} else if YamlEnv.Log == "all-in-one" {
 			InfoFile = NewLogFile("log")
 		}
 
@@ -73,9 +75,9 @@ func WriteLogs(level string, content string) {
 	case "debug":
 		//DebugFile := NewLogFile("DEBUG")
 		DebugFile := &os.File{}
-		if envConfig.Log == "separated" {
+		if YamlEnv.Log == "separated" {
 			DebugFile = NewLogFile("DEBUG")
-		} else if envConfig.Log == "all-in-one" {
+		} else if YamlEnv.Log == "all-in-one" {
 			DebugFile = NewLogFile("log")
 		}
 
@@ -90,9 +92,9 @@ func WriteLogs(level string, content string) {
 	case "fatal":
 		//FatalFile := NewLogFile("FATAL")
 		FatalFile := &os.File{}
-		if envConfig.Log == "separated" {
+		if YamlEnv.Log == "separated" {
 			FatalFile = NewLogFile("FATAL")
-		} else if envConfig.Log == "all-in-one" {
+		} else if YamlEnv.Log == "all-in-one" {
 			FatalFile = NewLogFile("log")
 		}
 
