@@ -12,7 +12,7 @@ type ConfigIT interface {
 	GetConfig()
 }
 
-// BarcoConfigIT interface is used as JSON config getter for CX-20
+// BarcoConfigIT interface is used as JSON config getter for CX-20 station
 type BarcoConfigIT interface {
 	GetConfig()
 }
