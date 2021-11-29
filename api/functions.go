@@ -53,7 +53,7 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 	FinalBody := string(body)
 	FinalBody, _ = format.PrettyString(FinalBody)
 
-	logs.WriteLogs("info", "api-MakeRequest : \n"+FinalBody, true)
+	logs.WriteLogs("info", "api-MakeRequest : \n"+FinalBody+"\n", true)
 
 	switch status {
 	case "200 OK":
@@ -110,7 +110,7 @@ func CheckIfBarcoCxApiIsReachable() bool {
 	FinalBody := string(body)
 	FinalBody, _ = format.PrettyString(FinalBody)
 
-	logs.WriteLogs("info", "api-CheckIfBarcoCxApiIsReachable : \n"+FinalBody, false)
+	logs.WriteLogs("info", "api-CheckIfBarcoCxApiIsReachable : "+res.Status, false)
 
 	switch status {
 	case "200 OK":

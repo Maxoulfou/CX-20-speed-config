@@ -20,7 +20,7 @@ func main() {
 
 	fmt.Println(YamlEnv)
 
-	logs.WriteLogs("info", "App is started", true)
+	logs.WriteLogs("info", "App is started\n", true)
 
 	if YamlEnv.Env == "debug" {
 		_, file, line, _ := runtime.Caller(1)
@@ -37,7 +37,7 @@ func main() {
 	config, _ := format.PrettyStruct(BarcoConfig)
 
 	_, file, line, _ := runtime.Caller(1)
-	logs.WriteLogs("info", "("+file+" : "+strconv.Itoa(line)+") Loaded configuration:\n"+config, true)
+	logs.WriteLogs("info", "("+file+" : "+strconv.Itoa(line)+") Loaded configuration:\n"+config+"\n", true)
 	logs.WriteLogs("info", "--- End loaded configuration ---", false)
 	// Must be commented, this snippet broke code
 	// test fatal log when I cant set loglevel :
@@ -51,7 +51,7 @@ func main() {
 
 	// cfg := configuration.GetEnv()
 	prettyCfg, _ := format.PrettyStruct(YamlEnv)
-	fmt.Printf("yml config: %+v\n", prettyCfg)
+	logs.WriteLogs("info", "yml config: \n"+prettyCfg+"\n", true)
 
 	// fmt.Println("Test reboot")
 	// api.Reboot()
