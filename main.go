@@ -2,7 +2,7 @@ package main
 
 import (
 	"cx-20-api/api"
-	"cx-20-api/configuration"
+	"cx-20-api/entity"
 	"cx-20-api/format"
 	"cx-20-api/logs"
 	"fmt"
@@ -12,11 +12,17 @@ import (
 )
 
 func main() {
-	envConfig := configuration.GetEnv()
+	// envConfig := configuration.GetEnv()
+	var YamlEnv entity.YmlConfig
+	YamlEnv.GetConfig()
+	var BarcoConfig entity.Barco
+	BarcoConfig.GetConfig()
+
+	fmt.Println(YamlEnv)
 
 	logs.WriteLogs("info", "App is started")
 
-	if envConfig.Env == "debug" {
+	if YamlEnv.Env == "debug" {
 		_, file, line, _ := runtime.Caller(1)
 		// TODO : if in yaml file, env is set up to debug, not prod
 		logs.WriteLogs("error", "("+file+" : "+strconv.Itoa(line)+") TEST ERROR LOG")
@@ -27,7 +33,7 @@ func main() {
 		// logs.WriteLogs("fatal", "("+file+" : "+strconv.Itoa(line)+") TEST FATAL LOG")
 	}
 
-	BarcoConfig, _ := configuration.LoadConfiguration("config.json")
+	// BarcoConfig, _ := configuration.LoadConfiguration("config.json")
 	config, _ := format.PrettyStruct(BarcoConfig)
 
 	_, file, line, _ := runtime.Caller(1)
@@ -43,12 +49,12 @@ func main() {
 		fmt.Println("it is not ok")
 	}
 
-	cfg := configuration.GetEnv()
-	prettyCfg, _ := format.PrettyStruct(cfg)
+	// cfg := configuration.GetEnv()
+	prettyCfg, _ := format.PrettyStruct(YamlEnv)
 	fmt.Printf("yml config: %+v\n", prettyCfg)
 
-	fmt.Println("Test reboot")
-	api.Reboot()
+	// fmt.Println("Test reboot")
+	// api.Reboot()
 
 	os.Exit(0)
 }
