@@ -54,6 +54,12 @@ File content :
 ```yml
 env: "env-type"
 log: "log-method"
+api-url: "http://192.168.1.1:4003/v2"
+# ---
+api-user: "user"
+api-password: "password"
+# ---
+api-token: "tokentoken"
 ```
 
 `env:` valid options :
