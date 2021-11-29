@@ -11,6 +11,10 @@ type ConfigIT interface {
 	GetConfig()
 }
 
+type BarcoConfigIT interface {
+	GetConfig()
+}
+
 func (receiver *YmlConfig) GetConfig() *YmlConfig {
 	yamlFile, ErrReadYamlFile := ioutil.ReadFile("env-prod.yml")
 	if ErrReadYamlFile != nil {
@@ -23,10 +27,6 @@ func (receiver *YmlConfig) GetConfig() *YmlConfig {
 	}
 
 	return receiver
-}
-
-type BarcoConfigIT interface {
-	GetConfig()
 }
 
 func (receiver *Barco) GetConfig() *Barco {
