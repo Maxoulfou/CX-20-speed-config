@@ -19,7 +19,7 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 	// TODO : make insecure request trough http transport method only for knowing end-devices
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
-	logs.WriteLogs("info", "CheckIfBarcoCxApiIsReachable start")
+	logs.WriteLogs("info", "MakeRequest start")
 	url := cfg.ApiUrl + path
 
 	client := &http.Client{}
@@ -53,7 +53,7 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 	FinalBody := string(body)
 	FinalBody, _ = format.PrettyString(FinalBody)
 
-	logs.WriteLogs("info", "api-CheckIfBarcoCxApiIsReachable : \n"+FinalBody)
+	logs.WriteLogs("info", "api-MakeRequest : \n"+FinalBody)
 
 	switch status {
 	case "200 OK":
