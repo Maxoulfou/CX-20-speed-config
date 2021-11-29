@@ -1,0 +1,12 @@
+language: go
+
+go:
+  - 1.16.x
+  - 1.17.x
+
+script:
+  - go build -o bin/
+
+  - ls
+  - cd bin/
+  - ls
