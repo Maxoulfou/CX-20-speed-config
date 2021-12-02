@@ -149,7 +149,7 @@ I strongly recommend using the following code: `req.Header.Add("Authorization", 
 
 
 
-## LineCounter benchmark
+## LineCounter benchmark -> it would be deleted
 
 ```
 /*
