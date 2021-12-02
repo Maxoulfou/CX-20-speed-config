@@ -20,3 +20,4 @@ logs/*.log
 
 # exclude prod env yml
 env-prod.yml
+config-prod.json
