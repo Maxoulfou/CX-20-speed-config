@@ -7,6 +7,7 @@ import (
 	"log"
 )
 
+// ConfigIT TODO : Make JSON structure
 // ConfigIT interface is used as YAML config getter for environment
 type ConfigIT interface {
 	GetConfig()
