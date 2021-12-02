@@ -47,14 +47,22 @@ func main() {
 		fmt.Println("it is ok")
 	} else {
 		fmt.Println("it is not ok")
+
+		return
 	}
 
 	// cfg := configuration.GetEnv()
 	prettyCfg, _ := format.PrettyStruct(YamlEnv)
 	logs.WriteLogs("info", "yml config: \n"+prettyCfg+"\n", true)
 
-	// fmt.Println("Test reboot")
+	fmt.Println("Test Personalization")
 	// api.Reboot()
+	api.Personalization()
+	fmt.Println("Get Wallpaper List")
+	api.GetWallpaperList()
+	api.ChangeWallpaper()
+	api.UpdateAirplayService()
+	api.UpdateGoogleCastService()
 
 	os.Exit(0)
 }
