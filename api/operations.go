@@ -7,8 +7,10 @@ import (
 	"strconv"
 )
 
+var Dict = route.RoutesDictionary()
+
 func SystemInformation() string {
-	GetSystemInfo, GetSystemInfoError := MakeRequest(route.SystemStatus, "", "GET")
+	GetSystemInfo, GetSystemInfoError := MakeRequest(Dict[route.SYSTEM_STATUS].Path, "", Dict[route.SYSTEM_STATUS].Method)
 	if GetSystemInfoError != nil {
 		logs.WriteLogs("error", "MakeRebootRequestError: "+GetSystemInfoError.Error(), true)
 
@@ -21,7 +23,7 @@ func SystemInformation() string {
 
 // Reboot function will reboot Barco CX-20 station
 func Reboot() {
-	MakeRebootRequest, MakeRebootRequestError := MakeRequest(route.Reboot, "", "POST")
+	MakeRebootRequest, MakeRebootRequestError := MakeRequest(Dict[route.REBOOT].Path, "", Dict[route.REBOOT].Method)
 	if MakeRebootRequestError != nil {
 		logs.WriteLogs("error", "MakeRebootRequestError: "+MakeRebootRequestError.Error(), true)
 
@@ -35,7 +37,7 @@ func Reboot() {
 func Personalization() {
 	var cfg entity.Barco
 	cfg.GetConfig()
-	RequestPersonalization, RequestPersonalizationError := MakeRequest(route.Personalization, `{"language": "`+cfg.Personalisation.OnScreenID.Language+`","location": "`+cfg.Personalisation.OnScreenID.Location+`","meetingRoomName": "`+cfg.Personalisation.OnScreenID.MeetingRoomName+`","screensaver": {"timeout": "`+cfg.Personalisation.OnScreenID.ScreenSaverTimeout+`"},"showNetworkInfo": `+strconv.FormatBool(cfg.Personalisation.OnScreenID.ShowNetworkInfo)+`,"theaterMode": {"enabled": `+strconv.FormatBool(cfg.Personalisation.OnScreenID.EnableThreaterMode)+`},"welcomeMessage": "`+cfg.Personalisation.OnScreenID.WelcomeMessage+`"}`, "PATCH")
+	RequestPersonalization, RequestPersonalizationError := MakeRequest(Dict[route.PERSONALIZATION].Path, `{"language": "`+cfg.Personalisation.OnScreenID.Language+`","location": "`+cfg.Personalisation.OnScreenID.Location+`","meetingRoomName": "`+cfg.Personalisation.OnScreenID.MeetingRoomName+`","screensaver": {"timeout": "`+cfg.Personalisation.OnScreenID.ScreenSaverTimeout+`"},"showNetworkInfo": `+strconv.FormatBool(cfg.Personalisation.OnScreenID.ShowNetworkInfo)+`,"theaterMode": {"enabled": `+strconv.FormatBool(cfg.Personalisation.OnScreenID.EnableThreaterMode)+`},"welcomeMessage": "`+cfg.Personalisation.OnScreenID.WelcomeMessage+`"}`, Dict[route.PERSONALIZATION].Method)
 	if RequestPersonalizationError != nil {
 		logs.WriteLogs("error", RequestPersonalizationError.Error(), true)
 
@@ -53,7 +55,7 @@ func Personalization() {
 func UpdateHostName() {
 	var cfg entity.Barco
 	cfg.GetConfig()
-	UpdateHostName, UpdateHostNameError := MakeRequest(route.UpdateHostName, `{"hostname": "`+cfg.WifiNetwork.LanSettings.LanHostName.Hostname+`"}`, "PATCH")
+	UpdateHostName, UpdateHostNameError := MakeRequest(Dict[route.UPDATE_HOSTNAME].Path, `{"hostname": "`+cfg.WifiNetwork.LanSettings.LanHostName.Hostname+`"}`, Dict[route.UPDATE_HOSTNAME].Method)
 	if UpdateHostNameError != nil {
 		logs.WriteLogs("error", UpdateHostNameError.Error(), true)
 
@@ -68,7 +70,7 @@ func UpdateHostName() {
 func GetWallpaperList() {
 	var cfg entity.Barco
 	cfg.GetConfig()
-	GetWallpaperListRequest, GetWallpaperListRequestError := MakeRequest(route.GetWallpaper, "", "GET")
+	GetWallpaperListRequest, GetWallpaperListRequestError := MakeRequest(Dict[route.GET_WALLPAPER].Path, "", Dict[route.GET_WALLPAPER].Method)
 	if GetWallpaperListRequestError != nil {
 		logs.WriteLogs("error", GetWallpaperListRequestError.Error(), true)
 
@@ -82,7 +84,7 @@ func GetWallpaperList() {
 func ChangeWallpaper() {
 	var cfg entity.Barco
 	cfg.GetConfig()
-	ChangeWallpaper, ChangeWallpaperError := MakeRequest(route.UpdateWallpaper, `{"id": "`+cfg.Personalisation.Wallpaper.Number+`"}`, "PATCH")
+	ChangeWallpaper, ChangeWallpaperError := MakeRequest(Dict[route.UPDATE_WALLPAPER].Path, `{"id": "`+cfg.Personalisation.Wallpaper.Number+`"}`, Dict[route.UPDATE_WALLPAPER].Method)
 	if ChangeWallpaperError != nil {
 		logs.WriteLogs("error", ChangeWallpaperError.Error(), true)
 
@@ -96,7 +98,7 @@ func ChangeWallpaper() {
 func UpdateAirplayService() {
 	var cfg entity.Barco
 	cfg.GetConfig()
-	ChangeWallpaper, ChangeWallpaperError := MakeRequest(route.UpdateServiceAirPlay, `{"enabled": "`+strconv.FormatBool(cfg.WifiNetwork.Services.ShareViaAirPlay)+`"}`, "PATCH")
+	ChangeWallpaper, ChangeWallpaperError := MakeRequest(Dict[route.UPDATE_SERVICE_AIR_PLAY].Path, `{"enabled": "`+strconv.FormatBool(cfg.WifiNetwork.Services.ShareViaAirPlay)+`"}`, Dict[route.UPDATE_SERVICE_AIR_PLAY].Method)
 	if ChangeWallpaperError != nil {
 		logs.WriteLogs("error", ChangeWallpaperError.Error(), true)
 
@@ -110,7 +112,7 @@ func UpdateAirplayService() {
 func UpdateGoogleCastService() {
 	var cfg entity.Barco
 	cfg.GetConfig()
-	ChangeWallpaper, ChangeWallpaperError := MakeRequest(route.UpdateServiceGoogleCast, `{"enabled": "`+strconv.FormatBool(cfg.WifiNetwork.Services.ShareViaGoogleCast)+`"}`, "PATCH")
+	ChangeWallpaper, ChangeWallpaperError := MakeRequest(Dict[route.UPDATES_ERVICE_GOOGLE_CAST].Path, `{"enabled": "`+strconv.FormatBool(cfg.WifiNetwork.Services.ShareViaGoogleCast)+`"}`, Dict[route.UPDATES_ERVICE_GOOGLE_CAST].Method)
 	if ChangeWallpaperError != nil {
 		logs.WriteLogs("error", ChangeWallpaperError.Error(), true)
 
