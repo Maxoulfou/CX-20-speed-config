@@ -63,7 +63,7 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 func CheckIfBarcoCxApiIsReachable() bool {
 	System := SystemInformation()
 	fmt.Printf("\nSystemStatus: %+v\n", System)
-	if System != "200 OK" {
+	if System == "200 OK" {
 
 		return true
 	} else {
