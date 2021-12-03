@@ -10,6 +10,8 @@ import (
 	"strings"
 )
 
+var YamlEnv entity.YmlConfig
+
 // MakeRequest is the generic function to execute CX20API requests
 func MakeRequest(path string, params string, method string) (response *http.Response, error error) {
 	var cfg entity.Barco
@@ -61,8 +63,13 @@ func MakeRequest(path string, params string, method string) (response *http.Resp
 // CheckIfBarcoCxApiIsReachable TODO : remake this func prettiest as possible
 // CheckIfBarcoCxApiIsReachable check if barco api is reachable with getting device identity.
 func CheckIfBarcoCxApiIsReachable() bool {
+	YamlEnv.GetConfig() // Load Yaml configuration
 	System := SystemInformation()
-	fmt.Printf("\nSystemStatus: %+v\n", System)
+
+	if YamlEnv.Env == "debug" {
+		fmt.Printf("\nSystemStatus: %+v\n", System)
+	}
+
 	if System == "200 OK" {
 
 		return true

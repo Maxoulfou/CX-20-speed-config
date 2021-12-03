@@ -3,6 +3,7 @@ package main
 import (
 	"cx-20-api/api"
 	"cx-20-api/entity"
+	"cx-20-api/executors"
 	"cx-20-api/format"
 	"cx-20-api/logs"
 	"cx-20-api/route"
@@ -30,9 +31,56 @@ func Init() {
 	InitApiChecking()
 
 	// Main program TODO : make args treatment
-	InitProg()
+	InitCliTool()
+	// InitProg()
 
 	os.Exit(0)
+}
+
+func InitCliTool() {
+	var Arguments []string
+	Arguments = os.Args[1:]
+
+	if len(Arguments) == 0 {
+		fmt.Println("There is no argument, please execute './cx-20-api.exe executors'\n")
+	} else if len(Arguments) == 1 {
+		switch Arguments[0] {
+		case "executors":
+			executors.Help()
+			break
+		case "reboot":
+			executors.Reboot()
+			break
+		case "personalization":
+			executors.Personalization()
+			break
+		case "airplay":
+			executors.Airplay()
+			break
+		case "google-cast":
+			executors.GoogleCast()
+			break
+		case "wallpaper-upload":
+			executors.WallpaperUpload()
+			break
+		case "change-wallpaper":
+			executors.ChangeWallpaper()
+			break
+		case "hostname":
+			executors.UpdateHostname()
+			break
+		case "wifi":
+			executors.UpdateSsid()
+			break
+		case "all":
+			executors.All()
+			break
+		default:
+			fmt.Printf("Please refer you to executors argument")
+		}
+	} else if len(Arguments) > 1 {
+		fmt.Printf("There is too much arguments, please refer you to executors argument\n")
+	}
 }
 
 // AsciiWelcome will displaying welcome message - ascii art
@@ -45,9 +93,14 @@ func AsciiWelcome() {
 // InitApiChecking check if CX-20 station's API is reachable
 func InitApiChecking() {
 	if api.CheckIfBarcoCxApiIsReachable() {
-		fmt.Print("it is ok")
+		if YamlEnv.Env == "debug" {
+			fmt.Print("it is ok")
+		}
+
 	} else {
-		fmt.Print("it is not ok")
+		if YamlEnv.Env == "debug" {
+			fmt.Print("it is not ok")
+		}
 
 		return
 	}

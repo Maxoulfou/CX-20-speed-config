@@ -128,35 +128,35 @@ func WriteLogs(level string, content string, console bool) {
 	case "info":
 		golog.SetLevel("info")
 		golog.Infof(content)
-		if console {
+		if YamlEnv.Env == "debug" {
 			fmt.Printf("\n" + level + " : " + content)
 		}
 		break
 	case "warn":
 		golog.SetLevel("warn")
 		golog.Warnf(content)
-		if console {
+		if YamlEnv.Env == "debug" {
 			fmt.Printf("\n" + level + " : " + content)
 		}
 		break
 	case "error":
 		golog.SetLevel("error")
 		golog.Errorf(content)
-		if console {
+		if YamlEnv.Env == "debug" {
 			fmt.Printf("\n" + level + " : " + content)
 		}
 		break
 	case "debug":
 		golog.SetLevel("debug")
 		golog.Debugf(content)
-		if console {
+		if YamlEnv.Env == "debug" {
 			fmt.Printf("\n" + level + " : " + content)
 		}
 		break
 	case "fatal":
 		golog.SetLevel("fatal")
 		golog.Fatalf(content)
-		if console {
+		if YamlEnv.Env == "debug" {
 			fmt.Printf("\n" + level + " : " + content)
 		}
 		break
