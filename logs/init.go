@@ -15,7 +15,7 @@ import (
 	Debug
 */
 
-// CheckLogsDirectory will check if 'logs' directory exist, if not, it will crete them
+// CheckLogsDirectory will check if 'logs' directory exist, if you don't, it will crete the directory
 func CheckLogsDirectory() {
 	path := "logs"
 	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
