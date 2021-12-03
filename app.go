@@ -3,10 +3,10 @@ package main
 import (
 	"cx-20-api/api"
 	"cx-20-api/entity"
-	"cx-20-api/executors"
 	"cx-20-api/format"
 	"cx-20-api/logs"
 	"cx-20-api/route"
+	"cx-20-api/services"
 	"fmt"
 	"github.com/common-nighthawk/go-figure"
 	"os"
@@ -42,44 +42,44 @@ func InitCliTool() {
 	Arguments = os.Args[1:]
 
 	if len(Arguments) == 0 {
-		fmt.Println("There is no argument, please execute './cx-20-api.exe executors'\n")
+		fmt.Println("There is no argument, please execute './cx-20-api.exe help'\n")
 	} else if len(Arguments) == 1 {
 		switch Arguments[0] {
 		case "help":
-			executors.Help()
+			services.Help()
 			break
 		case "reboot":
-			executors.Reboot()
+			services.Reboot()
 			break
 		case "personalization":
-			executors.Personalization()
+			services.Personalization()
 			break
 		case "airplay":
-			executors.Airplay()
+			services.Airplay()
 			break
 		case "google-cast":
-			executors.GoogleCast()
+			services.GoogleCast()
 			break
 		case "wallpaper-upload":
-			executors.WallpaperUpload()
+			services.WallpaperUpload()
 			break
 		case "change-wallpaper":
-			executors.ChangeWallpaper()
+			services.ChangeWallpaper()
 			break
 		case "hostname":
-			executors.UpdateHostname()
+			services.UpdateHostname()
 			break
 		case "wifi":
-			executors.UpdateSsid()
+			services.UpdateSsid()
 			break
 		case "all":
-			executors.All()
+			services.All()
 			break
 		default:
-			fmt.Printf("\nPlease refer you to executors argument")
+			fmt.Printf("\nPlease refer you to services argument")
 		}
 	} else if len(Arguments) > 1 {
-		fmt.Printf("There is too much arguments, please refer you to executors argument\n")
+		fmt.Printf("There is too much arguments, please refer you to services argument\n")
 	}
 }
 

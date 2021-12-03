@@ -1,4 +1,4 @@
-package executors
+package services
 
 import (
 	"cx-20-api/api"
