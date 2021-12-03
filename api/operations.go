@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-var Dict = route.RoutesDictionary()
+var Dict = route.RoutesDictionary(false) // false by default
 
 func SystemInformation() string {
 	GetSystemInfo, GetSystemInfoError := MakeRequest(Dict[route.SYSTEM_STATUS].Path, "", Dict[route.SYSTEM_STATUS].Method)
@@ -16,7 +16,7 @@ func SystemInformation() string {
 
 		return GetSystemInfoError.Error()
 	}
-	logs.WriteLogs("info", "Make reboot: "+GetSystemInfo.Status, true)
+	logs.WriteLogs("info", "GetSystemInfo Request: "+GetSystemInfo.Status, true)
 
 	return GetSystemInfo.Status
 }
@@ -67,6 +67,22 @@ func UpdateHostName() {
 	return
 }
 
+// UploadWallpaper : accepted link : https://url.com/photo.jpg or https://url.com/photo.png
+func UploadWallpaper() {
+	var cfg entity.Barco
+	cfg.GetConfig()
+	UploadWallpaperRequest, UploadWallpaperRequestError := MakeRequest(Dict[route.UPLOAD_WALLPAPER].Path, `{"url": "`+cfg.Personalisation.Wallpaper.Link+`"}`, Dict[route.UPLOAD_WALLPAPER].Method)
+	if UploadWallpaperRequestError != nil {
+		logs.WriteLogs("error", UploadWallpaperRequestError.Error(), true)
+
+		return
+	}
+
+	logs.WriteLogs("info", "UploadWallpaperRequest: "+UploadWallpaperRequest.Status, true)
+
+	return
+}
+
 func GetWallpaperList() {
 	var cfg entity.Barco
 	cfg.GetConfig()
@@ -78,6 +94,7 @@ func GetWallpaperList() {
 	}
 
 	logs.WriteLogs("info", "GetWallpaperListRequest: "+GetWallpaperListRequest.Status, true)
+
 	return
 }
 
@@ -92,6 +109,7 @@ func ChangeWallpaper() {
 	}
 
 	logs.WriteLogs("info", "GetWallpaperListRequest: "+ChangeWallpaper.Status, true)
+
 	return
 }
 
@@ -106,6 +124,7 @@ func UpdateAirplayService() {
 	}
 
 	logs.WriteLogs("info", "GetWallpaperListRequest: "+ChangeWallpaper.Status, true)
+
 	return
 }
 
@@ -120,6 +139,7 @@ func UpdateGoogleCastService() {
 	}
 
 	logs.WriteLogs("info", "GetWallpaperListRequest: "+ChangeWallpaper.Status, true)
+
 	return
 }
 
@@ -135,7 +155,27 @@ func UpdateWifiSettings() {
 		    "channel": 36,
 		    "frequencyBand": "5 GHz",
 		    "ssid": "ClickShare-NEXTVISION"
+			"passphrase": ""
+		  }
+		}
+
+		{
+		  "accessPoint": {
+			"ssid": "ClickShare-NEXTVISION"
+			"passphrase": ""
 		  }
 		}
 	*/
+
+	var cfg entity.Barco
+	cfg.GetConfig()
+	UpdateSsid, UpdateSsidError := MakeRequest(Dict[route.UPDATE_SSID].Path, `{"accessPoint": { "ssid": "`+cfg.WifiNetwork.WirelessNetwork.SsidName+`", "WPA2passphrase": "`+cfg.WifiNetwork.WirelessNetwork.Wpa2Password+`"}}`, Dict[route.UPDATE_SSID].Method)
+	if UpdateSsidError != nil {
+		logs.WriteLogs("error", UpdateSsidError.Error(), true)
+
+		return
+	}
+
+	logs.WriteLogs("info", "UpdateSsid: "+UpdateSsid.Status, true)
+	return
 }
