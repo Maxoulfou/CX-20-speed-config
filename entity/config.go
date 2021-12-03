@@ -7,6 +7,8 @@ import (
 	"log"
 )
 
+const VERSION = "1.0"
+
 // ConfigIT TODO : Make JSON structure
 // ConfigIT interface is used as YAML config getter for environment
 type ConfigIT interface {
@@ -78,6 +80,7 @@ type Barco struct {
 		}
 		Wallpaper struct {
 			Number string
+			Link   string
 		}
 	}
 	WifiNetwork struct {
