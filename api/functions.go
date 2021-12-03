@@ -3,122 +3,78 @@ package api
 import (
 	"crypto/tls"
 	"cx-20-api/entity"
-	"cx-20-api/format"
 	"cx-20-api/logs"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
+
+var YamlEnv entity.YmlConfig
 
 // MakeRequest is the generic function to execute CX20API requests
 func MakeRequest(path string, params string, method string) (response *http.Response, error error) {
-	// cfg := configuration.GetEnv()
-	var cfg entity.YmlConfig
+	var cfg entity.Barco
 	cfg.GetConfig()
+	var EnvCfg entity.YmlConfig
+	EnvCfg.GetConfig()
 
-	// TODO : make insecure request trough http transport method only for knowing end-devices
+	// WARN : make insecure request trough http transport method only for knowing end-devices
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
-	logs.WriteLogs("info", "MakeRequest start", false)
-	url := cfg.ApiUrl + path
+	url := EnvCfg.ApiUrl + path
+
+	payload := strings.NewReader(params)
 
 	client := &http.Client{}
-	req, err := http.NewRequest(method, url, nil)
+
+	req, err := http.NewRequest(method, url, payload)
 
 	if err != nil {
 		fmt.Println(err)
-		return nil, err
+
+		return
 	}
 
-	Auth := "Basic " + cfg.ApiToken
-
-	req.Header.Add("Accept", "application/json")
+	Auth := "Basic " + EnvCfg.ApiToken
 	req.Header.Add("Authorization", Auth)
+	req.Header.Add("Content-Type", "application/json")
 
 	res, err := client.Do(req)
 	if err != nil {
 		fmt.Println(err)
-		return nil, err
+
+		return
 	}
 	defer res.Body.Close()
-
-	status := res.Status
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		fmt.Println(err)
-		return nil, err
+
+		return
 	}
 
-	FinalBody := string(body)
-	FinalBody, _ = format.PrettyString(FinalBody)
+	logs.WriteLogs("info", string(body), true)
 
-	logs.WriteLogs("info", "api-MakeRequest : \n"+FinalBody+"\n", true)
-
-	switch status {
-	case "200 OK":
-		return response, nil
-		break
-	default:
-		return nil, err
-		break
-	}
-	return nil, err
+	return res, err
 }
 
+// CheckIfBarcoCxApiIsReachable TODO : remake this func prettiest as possible
 // CheckIfBarcoCxApiIsReachable check if barco api is reachable with getting device identity.
 func CheckIfBarcoCxApiIsReachable() bool {
-	// cfg := configuration.GetEnv()
-	var cfg entity.YmlConfig
-	cfg.GetConfig()
+	YamlEnv.GetConfig() // Load Yaml configuration
+	System := SystemInformation()
 
-	// TODO : make insecure request trough http transport method only for knowing end-devices
-	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
-
-	logs.WriteLogs("info", "CheckIfBarcoCxApiIsReachable start", false)
-	url := cfg.ApiUrl + "/configuration/system/device-identity"
-	method := "GET"
-
-	client := &http.Client{}
-	req, err := http.NewRequest(method, url, nil)
-
-	if err != nil {
-		fmt.Println(err)
-		return false
+	if YamlEnv.Env == "debug" {
+		fmt.Printf("\nSystemStatus: %+v\n", System)
 	}
 
-	Auth := "Basic " + cfg.ApiToken
+	if System == "200 OK" {
 
-	req.Header.Add("Accept", "application/json")
-	req.Header.Add("Authorization", Auth)
-
-	res, err := client.Do(req)
-	if err != nil {
-		fmt.Println(err)
-		return false
-	}
-	defer res.Body.Close()
-
-	status := res.Status
-
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		fmt.Println(err)
-		return false
-	}
-
-	FinalBody := string(body)
-	FinalBody, _ = format.PrettyString(FinalBody)
-
-	logs.WriteLogs("info", "api-CheckIfBarcoCxApiIsReachable : "+res.Status, false)
-
-	switch status {
-	case "200 OK":
 		return true
-		break
-	default:
+	} else {
+
 		return false
-		break
 	}
-	return false
 }

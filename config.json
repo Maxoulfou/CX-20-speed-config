@@ -1,20 +1,21 @@
 {
   "Network": {
-    "IP": "192.168.1.2",
+    "IP": "192.168.X.X",
     "SubnetMask": "255.255.255.0",
     "Gateway": "192.168.1.1"
   },
   "Personalisation": {
     "OnScreenID": {
-      "Language": "fr",
-      "MeetingRoomName": "test-meeting-room",
-      "Location": "France",
-      "WelcomeMessage": "Welcome !",
+      "Language": "French",
+      "MeetingRoomName": "",
+      "Location": "",
+      "WelcomeMessage": "",
       "ShowNetworkInfo": true,
-      "EnableThreaterMode": true
+      "EnableThreaterMode": true,
+      "ScreenSaverTimeout": "Infinite"
     },
     "Wallpaper": {
-      "Number": 1
+      "Number": "0"
     }
   },
   "WifiNetwork": {

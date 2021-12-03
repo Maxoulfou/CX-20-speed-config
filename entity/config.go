@@ -7,6 +7,9 @@ import (
 	"log"
 )
 
+const VERSION = "1.0"
+
+// ConfigIT TODO : Make JSON structure
 // ConfigIT interface is used as YAML config getter for environment
 type ConfigIT interface {
 	GetConfig()
@@ -18,6 +21,7 @@ type BarcoConfigIT interface {
 }
 
 func (receiver *YmlConfig) GetConfig() *YmlConfig {
+	// TODO : link to cli interface
 	yamlFile, ErrReadYamlFile := ioutil.ReadFile("env-prod.yml")
 	if ErrReadYamlFile != nil {
 		log.Fatalf("YAML config.GetConfig ErrReadYamlFile: " + ErrReadYamlFile.Error())
@@ -32,7 +36,8 @@ func (receiver *YmlConfig) GetConfig() *YmlConfig {
 }
 
 func (receiver *Barco) GetConfig() *Barco {
-	jsonFile, ErrReadJsonBarcoFile := ioutil.ReadFile("config.json")
+	// TODO : link to cli interface
+	jsonFile, ErrReadJsonBarcoFile := ioutil.ReadFile("config-prod.json")
 	if ErrReadJsonBarcoFile != nil {
 		log.Fatalf("JSON config.GetConfig ErrReadJsonBarcoFile: " + ErrReadJsonBarcoFile.Error())
 	}
@@ -71,9 +76,11 @@ type Barco struct {
 			WelcomeMessage     string
 			ShowNetworkInfo    bool
 			EnableThreaterMode bool
+			ScreenSaverTimeout string
 		}
 		Wallpaper struct {
-			Number int
+			Number string
+			Link   string
 		}
 	}
 	WifiNetwork struct {
