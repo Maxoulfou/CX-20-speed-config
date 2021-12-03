@@ -1,6 +1,9 @@
 package executors
 
-import "cx-20-api/api"
+import (
+	"cx-20-api/api"
+	"fmt"
+)
 
 func All() {
 	Personalization()
@@ -10,36 +13,45 @@ func All() {
 	GoogleCast()
 	Airplay()
 	ChangeWallpaper()
+	fmt.Printf("\n--> all command exit with no errors <--\n")
 }
 
 func Airplay() {
 	api.UpdateAirplayService()
+	fmt.Printf("\nairplay command exit with no errors\n")
 }
 
 func GoogleCast() {
 	api.UpdateGoogleCastService()
+	fmt.Printf("\ngoogle-cast command exit with no errors\n")
 }
 
 func Reboot() {
 	api.Reboot()
+	fmt.Printf("\nreboot command exit with no errors\n")
 }
 
 func Personalization() {
 	api.Personalization()
+	fmt.Printf("\npersonalization command exit with no errors\n")
 }
 
 func UpdateHostname() {
 	api.UpdateHostName()
+	fmt.Printf("\nhostname command exit with no errors\n")
 }
 
 func UpdateSsid() {
 	api.UpdateWifiSettings()
+	fmt.Printf("\nwifi command exit with no errors\n")
 }
 
 func WallpaperUpload() {
 	api.UploadWallpaper()
+	fmt.Printf("\nwallpaper-upload command exit with no errors\n")
 }
 
 func ChangeWallpaper() {
 	api.ChangeWallpaper()
+	fmt.Printf("\nchange-wallpaper command exit with no errors\n")
 }

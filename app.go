@@ -45,7 +45,7 @@ func InitCliTool() {
 		fmt.Println("There is no argument, please execute './cx-20-api.exe executors'\n")
 	} else if len(Arguments) == 1 {
 		switch Arguments[0] {
-		case "executors":
+		case "help":
 			executors.Help()
 			break
 		case "reboot":
@@ -76,7 +76,7 @@ func InitCliTool() {
 			executors.All()
 			break
 		default:
-			fmt.Printf("Please refer you to executors argument")
+			fmt.Printf("\nPlease refer you to executors argument")
 		}
 	} else if len(Arguments) > 1 {
 		fmt.Printf("There is too much arguments, please refer you to executors argument\n")
