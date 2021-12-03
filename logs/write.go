@@ -129,35 +129,35 @@ func WriteLogs(level string, content string, console bool) {
 		golog.SetLevel("info")
 		golog.Infof(content)
 		if console {
-			fmt.Printf(level + " : " + content)
+			fmt.Printf("\n" + level + " : " + content)
 		}
 		break
 	case "warn":
 		golog.SetLevel("warn")
 		golog.Warnf(content)
 		if console {
-			fmt.Printf(level + " : " + content)
+			fmt.Printf("\n" + level + " : " + content)
 		}
 		break
 	case "error":
 		golog.SetLevel("error")
 		golog.Errorf(content)
 		if console {
-			fmt.Printf(level + " : " + content)
+			fmt.Printf("\n" + level + " : " + content)
 		}
 		break
 	case "debug":
 		golog.SetLevel("debug")
 		golog.Debugf(content)
 		if console {
-			fmt.Printf(level + " : " + content)
+			fmt.Printf("\n" + level + " : " + content)
 		}
 		break
 	case "fatal":
 		golog.SetLevel("fatal")
 		golog.Fatalf(content)
 		if console {
-			fmt.Printf(level + " : " + content)
+			fmt.Printf("\n" + level + " : " + content)
 		}
 		break
 	}
