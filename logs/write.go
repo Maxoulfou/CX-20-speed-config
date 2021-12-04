@@ -1,9 +1,9 @@
 package logs
 
 import (
-	"cx-20-api/entity"
 	"fmt"
 	"github.com/kataras/golog"
+	"github.com/maxoulfou/CX-20-speed-config/entity"
 	"log"
 	"os"
 	"time"

@@ -2,9 +2,9 @@ package route
 
 import (
 	"bytes"
-	"cx-20-api/entity"
-	"cx-20-api/logs"
 	"fmt"
+	"github.com/maxoulfou/CX-20-speed-config/entity"
+	"github.com/maxoulfou/CX-20-speed-config/logs"
 )
 
 const (

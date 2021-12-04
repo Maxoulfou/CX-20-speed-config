@@ -1,9 +1,9 @@
 package api
 
 import (
-	"cx-20-api/entity"
-	"cx-20-api/logs"
-	"cx-20-api/route"
+	"github.com/maxoulfou/CX-20-speed-config/entity"
+	"github.com/maxoulfou/CX-20-speed-config/logs"
+	"github.com/maxoulfou/CX-20-speed-config/route"
 	"strconv"
 )
 

@@ -1,4 +1,4 @@
-module cx-20-api
+module github.com/maxoulfou/CX-20-speed-config
 
 go 1.17
 

@@ -1,14 +1,14 @@
 package main
 
 import (
-	"cx-20-api/api"
-	"cx-20-api/entity"
-	"cx-20-api/format"
-	"cx-20-api/logs"
-	"cx-20-api/route"
-	"cx-20-api/services"
 	"fmt"
 	"github.com/common-nighthawk/go-figure"
+	"github.com/maxoulfou/CX-20-speed-config/api"
+	"github.com/maxoulfou/CX-20-speed-config/entity"
+	"github.com/maxoulfou/CX-20-speed-config/format"
+	"github.com/maxoulfou/CX-20-speed-config/logs"
+	"github.com/maxoulfou/CX-20-speed-config/route"
+	"github.com/maxoulfou/CX-20-speed-config/services"
 	"os"
 	"runtime"
 	"strconv"

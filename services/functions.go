@@ -1,8 +1,8 @@
 package services
 
 import (
-	"cx-20-api/api"
 	"fmt"
+	"github.com/maxoulfou/CX-20-speed-config/api"
 )
 
 func All() {
